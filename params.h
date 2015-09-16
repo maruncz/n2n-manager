@@ -15,8 +15,7 @@ mgmt:7003\n\
 mac:00:00:00:00:00:00\n\
 mtu:1400\n\
 forward:no\n\
-multicast:no\n\
-"
+multicast:no\n"
 
 #include <QObject>
 #include <QFile>

@@ -8,7 +8,23 @@ manager::manager(QWidget *parent) :
     ui->setupUi(this);
     edge = new QProcess(this);
 #ifdef __linux__
-    edge->setProgram("bin/edge");
+    edge->setProgram("pkexec");
+    QProcess *id = new QProcess(this);
+    id->setProgram("id");
+    id->setArguments(QStringList("-u"));
+    id->start(QIODevice::ReadOnly);
+    id->waitForStarted();
+    id->waitForReadyRead();
+    uid=id->readLine();
+    uid=uid.simplified();
+    id->waitForFinished();
+    id->setArguments(QStringList("-g"));
+    id->start(QIODevice::ReadOnly);
+    id->waitForStarted();
+    id->waitForReadyRead();
+    gid=id->readLine();
+    gid=gid.simplified();
+    id->waitForFinished();
 #elif __WIN32__
     edge->setProgram("bin/edge.exe");
 #endif
@@ -94,6 +110,11 @@ void manager::on_apply_clicked()
         settings.forward=ui->forward->checkState();
         settings.multicast=ui->multicast->checkState();
         QStringList args;
+#ifdef __linux__
+        args.append(QApplication::applicationDirPath()+"/bin/edge");
+        args.append("-u "+uid);
+        args.append("-g "+gid);
+#endif
 #ifndef __WIN32__
         args.append("-f");
 #endif

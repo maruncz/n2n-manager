@@ -47,6 +47,8 @@ private:
     QProcess *edge;
 
     params settings;
+
+    QString uid,gid;
 };
 
 #endif // MANAGER_H
