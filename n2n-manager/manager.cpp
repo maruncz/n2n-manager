@@ -26,7 +26,7 @@ manager::manager(QWidget *parent) :
     gid=gid.simplified();
     id->waitForFinished();
 #elif __WIN32__
-    edge->setProgram("bin/edge.exe");
+    edge->setProgram("edge.exe");
 #endif
     ui->edge_ip->setText(settings.edge_ip);
     ui->edge_mask->setText(settings.edge_mask);
@@ -111,7 +111,7 @@ void manager::on_apply_clicked()
         settings.multicast=ui->multicast->checkState();
         QStringList args;
 #ifdef __linux__
-        args.append(QApplication::applicationDirPath()+"/bin/edge");
+        args.append(QApplication::applicationDirPath()+"/edge");
         args.append("-u "+uid);
         args.append("-g "+gid);
 #endif

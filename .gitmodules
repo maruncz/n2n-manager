@@ -1,3 +1,4 @@
 [submodule "n2n_v2"]
 	path = n2n_v2
 	url = https://github.com/maruncz/n2n_v2.git
+	ignore = all
