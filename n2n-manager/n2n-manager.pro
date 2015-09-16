@@ -15,15 +15,18 @@ TEMPLATE = app
 SOURCES += main.cpp \
     systemtray.cpp \
     manager.cpp \
-    params.cpp
+    params.cpp \
+    logger.cpp
 
 HEADERS  += \
     systemtray.h \
     manager.h \
-    params.h
+    params.h \
+    logger.h
 
 FORMS    += \
-    manager.ui
+    manager.ui \
+    logger.ui
 
 RESOURCES += \
     resources.qrc

@@ -43,6 +43,9 @@ manager::manager(QWidget *parent) :
     ui->mtu->setText(settings.mtu);
     ui->forward->setCheckState(settings.forward);
     ui->multicast->setCheckState(settings.multicast);
+
+    connect(edge,&QProcess::readyReadStandardError,this,&manager::on_edge_log_error);
+    connect(edge,&QProcess::readyReadStandardOutput,this,&manager::on_edge_log_std);
 }
 
 manager::~manager()
@@ -221,4 +224,19 @@ void manager::on_dhcp_stateChanged(int arg1)
 void manager::on_generate_mac_clicked()
 {
     ui->mac->setText(settings.generate_mac());
+}
+
+void manager::on_log_clicked()
+{
+    logwindow.show();
+}
+
+void manager::on_edge_log_error()
+{
+    logwindow.on_error_log(edge->readAllStandardError());
+}
+
+void manager::on_edge_log_std()
+{
+    logwindow.on_std_log(edge->readAllStandardOutput());
 }

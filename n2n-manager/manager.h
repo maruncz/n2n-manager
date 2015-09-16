@@ -8,6 +8,7 @@
 #include <QFileDialog>
 #include <cstdlib>
 #include "params.h"
+#include "logger.h"
 
 
 namespace Ui {
@@ -37,6 +38,12 @@ private slots:
 
     void on_generate_mac_clicked();
 
+    void on_log_clicked();
+
+    void on_edge_log_error();
+
+    void on_edge_log_std();
+
 signals:
 
     void quit();
@@ -47,6 +54,8 @@ private:
     QProcess *edge;
 
     params settings;
+
+    logger logwindow;
 
     QString uid,gid;
 };

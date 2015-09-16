@@ -6,13 +6,21 @@
 .PHONY: clean
 
 linux: n2n manager
-	mkdir manager; cp n2n_build/edge manager; cp n2n-manager-build/n2n-manager manager
+	mkdir manager
+	cp n2n_build/edge manager
+	cp n2n-manager-build/n2n-manager manager
 
 n2n:
-	mkdir n2n_build; cd n2n_build; cmake -DSNM=1 ../n2n_v2; make
+	mkdir n2n_build
+	cd n2n_build
+	cmake -DSNM=1 ../n2n_v2
+	make
 
 manager:
-	mkdir n2n-manager-build; cd n2n-manager-build; qmake ../n2n-manager; make
+	mkdir n2n-manager-build
+	cd n2n-manager-build
+	qmake ../n2n-manager
+	make
 
 clean:
 	rm -rf n2n-manager-build n2n_build manager
