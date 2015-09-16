@@ -2,8 +2,7 @@
 
 systemtray::systemtray(QObject *parent) : QObject(parent)
 {
-    icon.addFile(":obr/icon.png");
-    Q_ASSERT(!icon.isNull());
+    icon.addFile(":/pic/icon.png");
 
     trayicon = new QSystemTrayIcon(icon,new QObject(0));
 
