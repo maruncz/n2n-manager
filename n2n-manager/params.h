@@ -15,7 +15,8 @@ mgmt:7003\n\
 mac:00:00:00:00:00:00\n\
 mtu:1400\n\
 forward:no\n\
-multicast:no\n"
+multicast:no\n\
+start:no\n"
 
 #include <QObject>
 #include <QFile>
@@ -38,7 +39,7 @@ public:
     explicit params(QObject *parent = 0);
 
     QString community,key,keyfile,edge_ip,edge_mask,supernode_ip,supernode_port,snm_port,edge_port,mgmt_port,mac,mtu;
-    Qt::CheckState dhcp,dns,forward,multicast;
+    Qt::CheckState dhcp,dns,forward,multicast,apply_on_start;
 
 
     bool valid_ip(QString ip);

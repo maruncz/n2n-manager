@@ -4,7 +4,7 @@ systemtray::systemtray(QObject *parent) : QObject(parent)
 {
     icon.addFile(":/pic/icon.png");
 
-    trayicon = new QSystemTrayIcon(icon,new QObject(0));
+    trayicon = new QSystemTrayIcon(icon,parent);
 
     open = new QAction("open",this);
     close = new QAction("close",this);

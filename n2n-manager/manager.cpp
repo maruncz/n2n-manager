@@ -43,13 +43,24 @@ manager::manager(QWidget *parent) :
     ui->mtu->setText(settings.mtu);
     ui->forward->setCheckState(settings.forward);
     ui->multicast->setCheckState(settings.multicast);
+    ui->apply_on_start->setCheckState(settings.apply_on_start);
 
     connect(edge,&QProcess::readyReadStandardError,this,&manager::on_edge_log_error);
     connect(edge,&QProcess::readyReadStandardOutput,this,&manager::on_edge_log_std);
+    if(settings.apply_on_start)
+    {
+        on_apply_clicked();
+    }
 }
 
 manager::~manager()
 {
+    if(edge->state()==QProcess::Running)
+    {
+        edge->terminate();
+        edge->waitForFinished();
+        edge->kill();
+    }
     delete ui;
 }
 
@@ -64,11 +75,6 @@ void manager::on_apply_clicked()
     if(!settings.valid_mask(ui->edge_mask->text()) && !ui->dhcp->checkState())
     {
         QMessageBox::critical(this,tr("ERROR"),tr("Not valid edge mask"));
-        ok=false;
-    }
-    if(!settings.valid_ip(ui->supernode_ip->text()))
-    {
-        QMessageBox::critical(this,tr("ERROR"),tr("Not valid supernode IP"));
         ok=false;
     }
     if(!settings.valid_port(ui->supernode_port->text()))
@@ -99,12 +105,13 @@ void manager::on_apply_clicked()
     if(ok)
     {
         settings.community=ui->community->text();
-        settings.key=ui->community->text();
+        settings.key=ui->key->text();
         settings.edge_ip=ui->edge_ip->text();
         settings.edge_mask=ui->edge_mask->text();
         settings.dhcp=ui->dhcp->checkState();
         settings.supernode_ip=ui->supernode_ip->text();
         settings.supernode_port=ui->supernode_port->text();
+        settings.snm_port=ui->snm_port->text();
         settings.dns=ui->dns->checkState();
         settings.edge_port=ui->edge_port->text();
         settings.mgmt_port=ui->mgmt_port->text();
@@ -112,6 +119,7 @@ void manager::on_apply_clicked()
         settings.mtu=ui->mtu->text();
         settings.forward=ui->forward->checkState();
         settings.multicast=ui->multicast->checkState();
+        settings.apply_on_start=ui->apply_on_start->checkState();
         QStringList args;
 #ifdef __linux__
         args.append(QApplication::applicationDirPath()+"/edge");

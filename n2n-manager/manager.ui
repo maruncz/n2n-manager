@@ -47,13 +47,13 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="2" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="tabShape">
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
@@ -279,8 +279,40 @@
      </widget>
     </widget>
    </item>
+   <item row="1" column="0">
+    <widget class="QCheckBox" name="apply_on_start">
+     <property name="text">
+      <string>Apply on start</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>community</tabstop>
+  <tabstop>key_radio</tabstop>
+  <tabstop>key</tabstop>
+  <tabstop>keyfile_radio</tabstop>
+  <tabstop>keyfile_choose</tabstop>
+  <tabstop>edge_ip</tabstop>
+  <tabstop>edge_mask</tabstop>
+  <tabstop>dhcp</tabstop>
+  <tabstop>supernode_ip</tabstop>
+  <tabstop>supernode_port</tabstop>
+  <tabstop>dns</tabstop>
+  <tabstop>snm_port</tabstop>
+  <tabstop>edge_port</tabstop>
+  <tabstop>mgmt_port</tabstop>
+  <tabstop>mac</tabstop>
+  <tabstop>generate_mac</tabstop>
+  <tabstop>mtu</tabstop>
+  <tabstop>forward</tabstop>
+  <tabstop>multicast</tabstop>
+  <tabstop>apply</tabstop>
+  <tabstop>log</tabstop>
+  <tabstop>quit</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

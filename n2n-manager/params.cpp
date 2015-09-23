@@ -6,12 +6,12 @@ params::params(QObject *parent) : QObject(parent)
     stream.setDevice(file);
     if(!file->exists())
     {
-        file->open(QIODevice::WriteOnly | QIODevice::Truncate);
+        file->open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text);
         stream << DEFAULT_PARAMS ;
         file->close();
     }
     QStringList line;
-    file->open(QIODevice::ReadOnly);
+    file->open(QIODevice::ReadOnly | QIODevice::Text);
     line=stream.readLine().split(":",QString::KeepEmptyParts);
     while(!stream.atEnd())
     {
@@ -84,6 +84,10 @@ params::params(QObject *parent) : QObject(parent)
         {
             (line.at(1).toLower()=="yes")?(multicast=Qt::Checked):(multicast=Qt::Unchecked);
         }
+        if(line.at(0)=="start")
+        {
+            (line.at(1).toLower()=="yes")?(apply_on_start=Qt::Checked):(apply_on_start=Qt::Unchecked);
+        }
         line=stream.readLine().split(":",QString::KeepEmptyParts);
     }
     if(!valid_ip(edge_ip))
@@ -93,10 +97,6 @@ params::params(QObject *parent) : QObject(parent)
     if(!valid_mask(edge_mask))
     {
         edge_mask="255.255.255.0";
-    }
-    if(!valid_ip(supernode_ip))
-    {
-        supernode_ip="0.0.0.0";
     }
     if(!valid_port(supernode_port))
     {
@@ -146,7 +146,7 @@ QString params::generate_mac()
 
 int params::save_params()
 {
-    if(!file->open(QIODevice::WriteOnly | QIODevice::Truncate))
+    if(!file->open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text))
     {
         return -1;
     }
@@ -198,6 +198,15 @@ int params::save_params()
         tmp="no";
     }
     stream << "multicast:"+tmp+"\n";
+    if(apply_on_start==Qt::Checked)
+    {
+        tmp="yes";
+    }
+    else
+    {
+        tmp="no";
+    }
+    stream << "start:"+tmp+"\n";
     file->close();
     return 0;
 }
